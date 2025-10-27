@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Product List</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 60%;
+      margin: 20px auto;
+    }
+    th, td {
+      border: 1px solid #aaa;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    caption {
+      caption-side: top;
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <table id="productTable">
+    <caption>Product List</caption>
+    <thead>
+      <tr><th>ID</th><th>Name</th><th>Price</th></tr>
+    </thead>
+    <tbody>
+      <!-- Data will be inserted here -->
+    </tbody>
+  </table>
+
+  <script>
+    fetch("http://localhost:8080/products")
+      .then(response => response.json())
+      .then(data => {
+        const tbody = document.querySelector("#productTable tbody");
+        data.forEach(p => {
+          const row = `<tr><td>${p.id}</td><td>${p.name}</td><td>${p.price}</td></tr>`;
+          tbody.innerHTML += row;
+        });
+      })
+      .catch(error => {
+        alert("Failed to load data from API. Is the Spring Boot app running?");
+        console.error("Error fetching products:", error);
+      });
+  </script>
+
+</body>
+</html>
